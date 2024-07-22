@@ -2,7 +2,7 @@
 <html>
 <head>
     <title>Mey_Icha</title>
-    <link rel="stylesheet" href="/css/style.css">
+    <link rel="stylesheet" href="/css/sytle.css">
 </head>
 <body>
     <h1>Pengeloaan Data Pengguna</h1>

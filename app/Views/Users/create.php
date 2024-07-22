@@ -1,59 +1,19 @@
-<?php
-
-namespace App\Controllers;
-
-use App\Models\UserModel;
-use CodeIgniter\Controller;
-
-class UserController extends Controller
-{
-    public function index()
-    {
-        $model = new UserModel();
-        $data['users'] = $model->findAll();
-        return view('users/index', $data);
-    }
-
-    public function create()
-    {
-        return view('users/create');
-    }
-
-    public function store()
-    {
-        $model = new UserModel();
-        $data = [
-            'name' => $this->request->getPost('name'),
-            'email' => $this->request->getPost('email'),
-            'password' => password_hash($this->request->getPost('password'), PASSWORD_DEFAULT),
-        ];
-        $model->save($data);
-        return redirect()->to('/users');
-    }
-
-    public function edit($id)
-    {
-        $model = new UserModel();
-        $data['user'] = $model->find($id);
-        return view('users/edit', $data);
-    }
-
-    public function update($id)
-    {
-        $model = new UserModel();
-        $data = [
-            'name' => $this->request->getPost('name'),
-            'email' => $this->request->getPost('email'),
-            'password' => password_hash($this->request->getPost('password'), PASSWORD_DEFAULT),
-        ];
-        $model->update($id, $data);
-        return redirect()->to('/users');
-    }
-
-    public function delete($id)
-    {
-        $model = new UserModel();
-        $model->delete($id);
-        return redirect()->to('/users')->with('message', 'User deleted successfully.');
-    }
-}
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Edit User</title>
+    <link rel="stylesheet" href="/css/sytle.css">
+</head>
+<body>
+    <h1>Edit User</h1>
+    <form action="/users/update/<?= $user['id'] ?>" method="post">
+        <label>Name</label>
+        <input type="text" name="name" value="<?= $user['name'] ?>" required><br>
+        <label>Email</label>
+        <input type="email" name="email" value="<?= $user['email'] ?>" required><br>
+        <label>Password</label>
+        <input type="password" name="password" required><br>
+        <button type="submit">Update</button>
+    </form>
+</body>
+</html>
