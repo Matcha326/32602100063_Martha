@@ -1,22 +1,28 @@
 <?php
 
-use CodeIgniter\Router\RouteCollection;
+namespace Config;
 
-/**
- * @var RouteCollection $routes
- */
+$routes = Services::routes();
+
+if (file_exists(SYSTEMPATH . 'Config/Routes.php')) {
+    require SYSTEMPATH . 'Config/Routes.php';
+}
+
+$routes->setDefaultNamespace('App\Controllers');
+$routes->setDefaultController('Home');
+$routes->setDefaultMethod('index');
+$routes->setTranslateURIDashes(false);
+$routes->set404Override();
+$routes->setAutoRoute(true);
+
 $routes->get('/', 'Home::index');
-$routes->get('/halodunia', 'HelloWorld::halodunia');
-$routes->post('/home/save', 'Home::save');
-$routes->get('/form', 'FormController::submitForm');
-$routes->get('/latihanview', 'HelloWorld::index');
-$routes->get('/layouting', 'Layout::index');
-$routes->get('/', 'pages::profile');
-$routes->get('/skills', 'pages::profile');
+$routes->get('/users', 'UserController::index');
+$routes->get('/users/create', 'UserController::create');
+$routes->post('/users/store', 'UserController::store');
+$routes->get('/users/edit/(:num)', 'UserController::edit/$1');
+$routes->post('/users/update/(:num)', 'UserController::update/$1');
+$routes->get('/users/delete/(:num)', 'UserController::delete/$1');
 
-//Crud
-$routes->get('/crud', 'Crud::index');
-$routes->get('/crud/tambah', 'Crud::tambah');
-$routes->get('/crud/hapus', 'Crud::hapus');
-$routes->get('/crud/edit', 'Crud::edit');
-
+if (file_exists(APPPATH . 'Config/' . ENVIRONMENT . '/Routes.php')) {
+    require APPPATH . 'Config/' . ENVIRONMENT . '/Routes.php';
+}
